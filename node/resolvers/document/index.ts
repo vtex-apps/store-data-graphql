@@ -1,5 +1,5 @@
 import { UserInputError } from '@vtex/api'
-import { compose, map, union, prop, replace } from 'ramda'
+import { compose, map, union, prop, replace, path } from 'ramda'
 import { parseFieldsToJson } from '../../utils/object'
 import { resolvers as documentSchemaResolvers} from './documentSchema'
 
@@ -20,6 +20,29 @@ export const queries = {
         fields: mapKeyAndStringifiedValues(document)
       })
     )(data)
+  },
+
+  documentsWithPagination: async (_: any, args: DocumentsArgs, context: Context) => {
+    const { acronym, fields, page, pageSize, where, schema } = args
+    const { clients: { masterdata } } = context
+    const fieldsWithId = union(fields, ['id'])
+
+    const documentsRow = await masterdata.searchDocumentRaw(acronym, fieldsWithId, where, {
+        page,
+        pageSize,
+      }, schema) as any
+
+    const documents = path(['data'], documentsRow) as any
+    const pageInfo = path(['pageInfo'], documentsRow) as any
+    
+    return {
+      items: map((document: any) =>({
+        cacheId: document.id,
+        id: document.id,
+        fields: mapKeyAndStringifiedValues(document)
+        }))(documents),
+      pagination: pageInfo
+    }
   },
 
   document: async (_: any, args: DocumentArgs, context: Context) => {

@@ -8,6 +8,7 @@ import {
 import FormData from 'form-data'
 
 import { statusToError } from '../utils'
+import {path} from 'ramda'
 
 export class MasterData extends ExternalClient {
   public constructor(ctx: IOContext, options?: InstanceOptions) {
@@ -73,6 +74,38 @@ export class MasterData extends ExternalClient {
       },
     })}
 
+  public searchDocumentRaw = async(
+    acronym: string,
+    fields: string[],
+    where: string,
+    pagination: PaginationArgs,
+    schema?: string
+  ) =>{
+    
+    const rowData = await this.getRaw(this.routes.search(acronym), {
+      headers: paginationArgsToHeaders(pagination),
+      metric: 'masterdata-searchDocuments-with-paging',
+      params: {
+        _fields: generateFieldsArg(fields),
+        _where: where,
+        ...schema ? {_schema: schema} : null
+      },
+    }) as any
+
+    const headerData = path(["headers"], rowData) as any
+    const resourceHeader = path(["rest-content-range"], headerData)
+    const pagingInfoSplitted = (resourceHeader as string).split(' ')[1].split('/')
+    
+    return { 
+      data: path(['data'], rowData),
+      pageInfo: {
+        total: pagingInfoSplitted && pagingInfoSplitted.length > 1? pagingInfoSplitted[1]: 0,
+        perPage: pagination ? pagination.pageSize: 0,
+        page: pagination? pagination.page: 1,
+      }
+    }
+  }
+
   public deleteDocument = (acronym: string, id: string) =>
     this.delete(this.routes.document(acronym, id), {
       metric: 'masterdata-deleteDocument',
@@ -103,6 +136,10 @@ export class MasterData extends ExternalClient {
 
   protected patch = <T>(url: string, data?: any, config?: RequestConfig) => {
     return this.http.patch<T>(url, data, config).catch(statusToError)
+  }
+
+  protected getRaw = <T>(url: string, config?: RequestConfig) => {
+    return this.http.getRaw<T>(url, config).catch(statusToError)
   }
 
   private get routes() {

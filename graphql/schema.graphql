@@ -364,6 +364,37 @@ type Query {
     schema: String
   ): [Document]
 
+
+    """
+  Search documents with pagination
+  """
+  documentsWithPagination(
+    """
+    Schema name. e.g.: CL, AD
+    """
+    acronym: String
+    """
+    Fields that will be returned by document. e.g.: _fields=email,firstName,document
+    """
+    fields: [String]
+    """
+    Pagination. Default: 1
+    """
+    page: Int = 1
+    """
+    Items returned in the page. Default: 15
+    """
+    pageSize: Int = 15
+    """
+    Filters the results. eg.: _where=email=my@email.com
+    """
+    where: String
+    """
+    Defines the Master Data schema to be used
+    """
+    schema: String
+  ): DocumentsPage
+
   """
   Get document
   """

@@ -32,6 +32,11 @@ input DocumentInput {
   fields: [FieldInput]
 }
 
+type DocumentsPage {
+  items: [Document]
+  pagination: Pagination
+}
+
 type DocProperty {
   name: String,
   type: String,
