@@ -562,7 +562,7 @@ type Mutation {
     utmiParams: OrderFormInputUTMIParams
   ): OrderForm @withSegment @withOrderFormId
   cancelOrder(orderFormId: String, reason: String): Boolean @withOrderFormId
-  updateItems(orderFormId: String, items: [OrderFormItemInput]): OrderForm
+  updateItems(orderFormId: String, items: [OrderFormItemInput], splitItem: Boolean): OrderForm
     @withSegment
     @withOrderFormId
     @cacheControl(scope: PRIVATE)
