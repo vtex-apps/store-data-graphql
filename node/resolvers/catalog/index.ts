@@ -240,25 +240,25 @@ const getSearchMetaData = async (
 
 const translateToStoreDefaultLanguage = async (
   clients: Context['clients'],
+  vtex: Context['vtex'],
   term: string
 ): Promise<string> => {
-  const { segment, messagesGraphQL } = clients
-  const [{ cultureInfo: to }, { cultureInfo: from }] = await Promise.all([
-    segment.getSegmentByToken(null),
-    segment.getSegment(),
-  ])
+  const { messagesGraphQL } = clients
+  const { locale: from, tenant } = vtex
+  const { locale: to } = tenant!
+
   return from && from !== to
     ? messagesGraphQL
-        .translateV2({
-          indexedByFrom: [
-            {
-              from,
-              messages: [{ content: term }],
-            },
-          ],
-          to,
-        })
-        .then(head)
+      .translateV2({
+        indexedByFrom: [
+          {
+            from,
+            messages: [{ content: term }],
+          },
+        ],
+        to,
+      })
+      .then(head)
     : term
 }
 
@@ -288,9 +288,11 @@ export const queries = {
     const {
       clients: { catalog },
       clients,
+      vtex,
     } = ctx
     const translatedTerm = await translateToStoreDefaultLanguage(
       clients,
+      vtex,
       args.searchTerm
     )
     const { itemsReturned } = await catalog.autocomplete({
@@ -311,6 +313,7 @@ export const queries = {
     const {
       clients: { catalog },
       clients,
+      vtex,
     } = ctx
 
     if (facets && facets.includes('undefined')) {
@@ -320,6 +323,7 @@ export const queries = {
     let result
     const translatedQuery = await translateToStoreDefaultLanguage(
       clients,
+      vtex,
       query
     )
     const segmentData = ctx.vtex.segment
@@ -447,6 +451,7 @@ export const queries = {
     const {
       clients,
       clients: { catalog },
+      vtex,
     } = ctx
     const queryTerm = args.query
     if (queryTerm == null || test(/[?&[\]=]/, queryTerm)) {
@@ -463,6 +468,7 @@ export const queries = {
 
     const query = await translateToStoreDefaultLanguage(
       clients,
+      vtex,
       args.query || ''
     )
     const translatedArgs = {
@@ -470,7 +476,7 @@ export const queries = {
       query,
     }
     const [productsRaw, searchMetaData] = await Promise.all([
-      catalog.products(args, true),
+      catalog.products(translatedArgs, true),
       getSearchMetaData(_, translatedArgs, ctx),
     ])
     return {
@@ -587,7 +593,7 @@ export const queries = {
   },
 
   searchMetadata: async (_: any, args: SearchMetadataArgs, ctx: Context) => {
-    const { clients } = ctx
+    const { clients, vtex } = ctx
     const queryTerm = args.query
     if (queryTerm == null || test(/[?&[\]=]/, queryTerm)) {
       throw new UserInputError(
@@ -596,6 +602,7 @@ export const queries = {
     }
     const query = await translateToStoreDefaultLanguage(
       clients,
+      vtex,
       args.query || ''
     )
     const translatedArgs = {
