@@ -1,15 +1,14 @@
 import { path } from 'ramda'
 import { MutationSaveAddressArgs } from 'vtex.store-graphql'
-
 import fieldR from './fieldResolvers'
 import {
   createAddress,
   deleteAddress,
   getProfile,
+  saveAddress,
   updateAddress,
   updateProfile,
   updateProfilePicture,
-  saveAddress,
 } from './services'
 
 const TRUE = 'True'
@@ -17,6 +16,7 @@ const FALSE = 'False'
 
 interface SubscribeNewsletterArgs {
   email: string
+  firstName: string
   isNewsletterOptIn: boolean
 }
 
@@ -44,7 +44,7 @@ export const mutations = {
 
   subscribeNewsletter: async (
     _: any,
-    { email, isNewsletterOptIn }: SubscribeNewsletterArgs,
+    { email, firstName, isNewsletterOptIn }: SubscribeNewsletterArgs,
     context: Context
   ) => {
     const profile = context.clients.profile
@@ -55,6 +55,7 @@ export const mutations = {
     await profile.updatePersonalPreferences(
       { email, userId: '' },
       {
+        firstName,
         isNewsletterOptIn: optIn,
       }
     )

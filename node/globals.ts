@@ -4,7 +4,6 @@ import {
   SegmentData,
   ServiceContext,
 } from '@vtex/api'
-
 import { Clients } from './clients'
 import { IdentityDataSource } from './dataSources/identity'
 
@@ -96,6 +95,7 @@ declare global {
 
   interface PersonalPreferences {
     isNewsletterOptIn?: 'True' | 'False'
+    firstName?: string
   }
 
   interface ProfileCustomField {

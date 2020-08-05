@@ -551,7 +551,10 @@ type Mutation {
     """
     Id of orderForm you want to mutate
     """
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     """
     List of items you want to add and their properties
     """
@@ -566,11 +569,17 @@ type Mutation {
     utmiParams: OrderFormInputUTMIParams
   ): OrderForm @withSegment @withOrderFormId
   cancelOrder(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     reason: String
   ): Boolean @withOrderFormId
   updateItems(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     items: [OrderFormItemInput]
   ): OrderForm @withSegment @withOrderFormId @cacheControl(scope: PRIVATE)
 
@@ -664,46 +673,73 @@ type Mutation {
   """
   Subscribe to newsletter
   """
-  subscribeNewsletter(email: String, isNewsletterOptIn: Boolean): Boolean
-    @cacheControl(scope: PRIVATE)
+  subscribeNewsletter(
+    email: String
+    firstName: String
+    isNewsletterOptIn: Boolean
+  ): Boolean @cacheControl(scope: PRIVATE)
 
   """
   Order Form
   """
   updateOrderFormProfile(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     fields: OrderFormProfileInput
   ): OrderForm @withOrderFormId
   updateOrderFormShipping(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     address: OrderFormAddressInput
   ): OrderForm @withOrderFormId
   updateOrderFormPayment(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     payments: [OrderFormPaymentInput]
   ): OrderForm @withOrderFormId
   updateOrderFormIgnoreProfile(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     ignoreProfileData: Boolean
   ): OrderForm @withOrderFormId
   addOrderFormPaymentToken(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     paymentToken: OrderFormPaymentTokenInput
   ): OrderForm @withOrderFormId
   setOrderFormCustomData(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     appId: String
     field: String
     value: String
   ): OrderForm @withOrderFormId
   addAssemblyOptions(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     itemId: String
     assemblyOptionsId: String
     options: [AssemblyOptionInput]
   ): OrderForm @withOrderFormId
   updateOrderFormCheckin(
-    orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
+    orderFormId: String
+      @deprecated(
+        reason: "Field is no longer needed. Checkout cookie is automatically taken into account now"
+      )
     checkin: OrderFormCheckinInput
   ): OrderForm @withOrderFormId @cacheControl(scope: PRIVATE)
 
