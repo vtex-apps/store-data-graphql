@@ -18,6 +18,7 @@ type OrderForm {
   ignoreProfileData: Boolean
   totalizers: [Totalizer]
   clientProfileData: ClientProfile
+  marketingData: MarketingData
   sellers: [OrderFormSeller]
   shippingData: OrderFormShippingData
   storePreferencesData: StorePreferencesData
@@ -165,6 +166,17 @@ type ClientProfile {
   tradeName: String
 }
 
+type MarketingData {
+  coupon: String
+  utmCampaign: String
+  utmMedium: String
+  utmSource: String
+  utmiCampaign: String
+  utmiPage: String
+  utmiPart: String
+  marketingTags: [String]
+}
+
 type OrderFormShippingData {
   address: Address
   availableAddresses: [Address]!
@@ -225,6 +237,17 @@ input OrderFormPaymentTokenInput {
   bin: String
   paymentSystem: String
   paymentSystemName: String
+}
+
+input OrderFormMarketingDataInput {
+  coupon: String
+  utmCampaign: String
+  utmMedium: String
+  utmSource: String
+  utmiCampaign: String
+  utmiPage: String
+  utmiPart: String
+  marketingTags: [String]
 }
 
 input OrderFormCheckinInput {

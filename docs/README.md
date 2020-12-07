@@ -88,6 +88,7 @@ TODO
 - `updateOrderFormShipping`
 - `updateOrderFormPayment`
 - `updateOrderFormIgnoreProfile`
+- `updateOrderFormMarketingData`
 - `addOrderFormPaymentToken`
 - `setOrderFormCustomData`
 - `createPaymentSession`

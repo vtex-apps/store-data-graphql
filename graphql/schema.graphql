@@ -698,6 +698,9 @@ type Mutation {
     orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
     ignoreProfileData: Boolean
   ): OrderForm @withOrderFormId
+  updateOrderFormMarketingData(
+    marketingData: OrderFormMarketingDataInput
+  ): OrderForm @withOrderFormId
   addOrderFormPaymentToken(
     orderFormId: String @deprecated(reason: "Field is no longer needed. Checkout cookie is automatically taken into account now")
     paymentToken: OrderFormPaymentTokenInput

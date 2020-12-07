@@ -611,6 +611,16 @@ export const mutations: Record<string, Resolver> = {
     })
   },
 
+  updateOrderFormMarketingData: async (_, { marketingData }, ctx) => {
+    const { clients: { checkout }, vtex: { orderFormId } } = ctx
+
+    if (orderFormId == null) {
+      throw new Error('No orderformid in cookies')
+    }
+
+    return checkout.updateOrderFormMarketingData(orderFormId, marketingData)
+  },
+
   addAssemblyOptions: (
     _,
     { itemId, assemblyOptionsId, options },
