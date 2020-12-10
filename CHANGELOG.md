@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- OrderItemClientProfileData to Order type.
+
 ## [2.136.8] - 2020-12-08
 ### Added
 - `scope: public` to `getPublicSchema` query.

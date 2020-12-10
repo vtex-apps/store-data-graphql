@@ -17,9 +17,28 @@ type Order {
   items: [OrderItem]
   sellers: [OrderItemSeller]
   totals: [OrderItemTotal]
+  clientProfileData: OrderItemClientProfileData
   paymentData: OrderItemPaymentData
   shippingData: OrderItemShippingData
   storePreferencesData: StorePreferencesData
+}
+
+type OrderItemClientProfileData {
+  id: String
+  email: String
+  firstName: String
+  lastName: String
+  documentType: String
+  document: String
+  phone: String
+  corporateName: String
+  tradeName: String
+  corporateDocument: String
+  stateInscription: String
+  corporatePhone: String
+  isCorporate: Boolean
+  userProfileId: String
+  customerClass: String
 }
 
 type OrderItem {
