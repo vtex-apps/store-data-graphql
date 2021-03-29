@@ -45,6 +45,7 @@ declare global {
   interface CurrentProfile {
     email: string
     userId: string
+    isAuthenticated?: boolean
   }
 
   interface Item {
