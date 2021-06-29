@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Use `unitMultiplier` to calculate the price.
+- Add utmi campaign to the simulation request
+
 ## [2.142.6] - 2021-07-05
 ### Fixed
 - Security vulnerability concerning the `masterdata` client.
