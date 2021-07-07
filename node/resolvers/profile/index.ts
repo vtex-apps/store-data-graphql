@@ -50,7 +50,7 @@ export const mutations = {
 
   subscribeNewsletter: async (
     _: any,
-    { email, fields, isNewsletterOptIn }: SubscribeNewsletterArgs,
+    { fields, isNewsletterOptIn }: SubscribeNewsletterArgs,
     context: Context
   ) => {
     const { profile } = context.clients
@@ -63,8 +63,12 @@ export const mutations = {
       isNewsletterOptIn: optIn,
     }
 
+    // Not logged in
+    if(!context.vtex.currentProfile) throw new Error("You need to be logged in to use this mutation!")
+
+
     if (fields) {
-      const userProfile = await profile.getProfileInfo({ email, userId: '' })
+      const userProfile = await profile.getProfileInfo(context.vtex.currentProfile)
 
       const { name, phone, bindingId, bindingUrl } = fields
 
@@ -94,8 +98,7 @@ export const mutations = {
       }
     }
 
-    await profile.updatePersonalPreferences(
-      { email, userId: '' },
+    await profile.updatePersonalPreferences(context.vtex.currentProfile,
       updatedPersonalPreferences
     )
 

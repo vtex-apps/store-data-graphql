@@ -696,10 +696,12 @@ type Mutation {
   Subscribe to newsletter
   """
   subscribeNewsletter(
-    email: String
+    email: String @deprecated(
+        reason: "Field is no longer needed. We use the current loggedin user for it!"
+      )
     isNewsletterOptIn: Boolean
     fields: NewsletterFieldsInput
-  ): Boolean @cacheControl(scope: PRIVATE)
+  ): Boolean @withCurrentProfile @cacheControl(scope: PRIVATE)
 
   """
   Order Form
