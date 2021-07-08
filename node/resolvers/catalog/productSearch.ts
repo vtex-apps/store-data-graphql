@@ -8,6 +8,10 @@ interface ProductSearchParent {
   searchMetaData: {
     titleTag: string | null
     metaTagDescription: string | null
+  },
+  pageInfo: {
+    from?: number
+    to?: number
   }
 }
 
@@ -23,6 +27,23 @@ export const resolvers = {
       const quantity = resources.split('/')[1]
 
       return parseInt(quantity, 10)
+    },
+    pagination: ({ productsRaw, pageInfo }: ProductSearchParent) => {
+      const {
+        headers: { resources },
+      } = productsRaw
+      
+      const from = pageInfo && pageInfo.from? pageInfo.from: 0
+      const to = pageInfo && pageInfo.to? pageInfo.to: 0
+
+      const total = resources.split('/')
+      const perPage = (to > from)? to - from + 1: 0
+  
+       return {
+        total: total && total.length > 1? total[1]: 0,
+        perPage,
+        page: perPage? Math.ceil(from / perPage) + 1 : 0,
+      }
     },
     products: path(['productsRaw', 'data']),
     breadcrumb: async (

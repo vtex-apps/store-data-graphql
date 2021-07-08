@@ -1,0 +1,5 @@
+type Pagination {
+  page: Int!
+  perPage: Int!
+  total: Int!
+}

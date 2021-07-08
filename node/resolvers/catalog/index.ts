@@ -509,6 +509,7 @@ export const queries = {
       translatedArgs,
       searchMetaData,
       productsRaw,
+      pageInfo: { from: args.from, to: args.to }
     }
   },
 
