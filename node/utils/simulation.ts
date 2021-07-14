@@ -59,7 +59,7 @@ export const orderFormItemToSeller = (
     ratesAndBenefitsData: RatesAndBenefitsData
   }
 ) => {
-  const unitMultiplier = orderFormItem.unitMultiplier ? orderFormItem.unitMultiplier : 1
+  const unitMultiplier = orderFormItem.unitMultiplier ?? 1
 
   const commertialOffer = {
     Price: orderFormItem.sellingPrice
