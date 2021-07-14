@@ -3,14 +3,32 @@ import { SegmentData } from '@vtex/api'
 const ALLOWED_TEASER_TYPES = ['Catalog', 'Profiler', 'ConditionalPrice']
 
 const getMarketingData = (segment?: SegmentData) => {
-  if (!segment || !segment.utm_campaign || !segment.utm_source) {
+  if(!segment?.utm_campaign && !segment?.utm_source && !segment?.utmi_campaign) {
     return
   }
 
-  return {
-    utmCampaign: segment.utm_campaign,
-    utmSource: segment.utm_source,
+  let marketingData = {}
+  if(segment?.utm_campaign) {
+    marketingData = {
+      utmCampaign: segment?.utm_campaign
+    }
   }
+
+  if(segment?.utm_source) {
+    marketingData = {
+      ...marketingData,
+      utmSource: segment?.utm_source
+    }
+  }
+
+  if(segment?.utmi_campaign) {
+    marketingData = {
+      ...marketingData,
+      utmiCampaign: segment?.utmi_campaign
+    }
+  }
+
+  return marketingData
 }
 
 export const getSimulationPayloadsByItem = (
@@ -41,8 +59,12 @@ export const orderFormItemToSeller = (
     ratesAndBenefitsData: RatesAndBenefitsData
   }
 ) => {
+  const unitMultiplier = orderFormItem.unitMultiplier ?? 1
+
   const commertialOffer = {
-    Price: orderFormItem.sellingPrice / 100,
+    Price: orderFormItem.sellingPrice
+      ? Number((orderFormItem.sellingPrice / (unitMultiplier * 100)).toFixed(2))
+      : orderFormItem.price / 100,
     PriceValidUntil: orderFormItem.priceValidUntil,
     ListPrice: orderFormItem.listPrice / 100,
     PriceWithoutDiscount: orderFormItem.price / 100,
