@@ -5,7 +5,7 @@
     "apollo-datasource-rest": "^0.1.5",
     "apollo-server-errors": "^2.0.2",
     "atob": "^2.1.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "camelcase": "^5.0.0",
     "cookie": "^0.3.1",
     "form-data": "^2.3.2",
